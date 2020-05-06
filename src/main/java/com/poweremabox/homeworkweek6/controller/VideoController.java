@@ -28,7 +28,11 @@ public class VideoController {
 
     @EmailAspect
     @PostMapping
-    public void addVideo(@RequestBody Video video) {
-        videoService.addVideos(video);
+    public ResponseEntity<Video> addVideo(@RequestBody Video video) {
+        boolean add = videoService.addVideos(video);
+        if (add) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
